@@ -26,3 +26,4 @@ def main():
     GLOBAL_minTemp = 64
     logic(temp, GLOBAL_maxTemp, GLOBAL_minTemp)
 
+main()
