@@ -6,22 +6,22 @@ start_time = time.time()
 
 temp = 55
 target_temp = 67
-
-temp_delta_heat = (82.165/3600*15)
-temp_delta_cool = (15/120)
+time_delta = 15
+temp_delta_heat = (82.165*time_delta/3600)
+temp_delta_cool = (time_delta/120)
 
 while (time.time() - start_time) < (end_time * 60):
 
-    while temp < target_temp:
+    if temp < target_temp:
         temp += temp_delta_heat
         print(temp)
-        time.sleep(0)
 
-    while temp > target_temp:
+
+    elif temp > target_temp:
         temp -= temp_delta_cool
         print(temp)
-        time.sleep(0)
 
+    sleep(0)
 
 
 
