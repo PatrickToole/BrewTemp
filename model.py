@@ -9,27 +9,27 @@ def getTemperature():
     return randNum
 
 def logic(temp, maxTemp, minTemp):
-    if temp > maxTemp:
-        return heatOFF()
-    elif temp < minTemp:
-        return heatON()
-
+    if temp >= maxTemp:
+        return (temp - 1)
+    elif temp <= minTemp:
+        return (temp + 1)
 
 
 def heatON():
      getTemperature() + 1
-     print(temp)
+
 def heatOFF():
     getTemperature() - 1
-    print(temp)
+
+
+temp = getTemperature()             # float(input('what is the temperature'))
 
 while (time.time() - start_time) < (end_time * 60):
 
     print(datetime.datetime.now().strftime("%a, %d %B %Y %I:%M:%S"))
-    temp = getTemperature()             # float(input('what is the temperature'))
-    GLOBAL_maxTemp = 68
-    GLOBAL_minTemp = 64
+    GLOBAL_maxTemp = 66
+    GLOBAL_minTemp = 66
     logic(temp, GLOBAL_maxTemp, GLOBAL_minTemp)
-    print()
+    print(logic(temp,GLOBAL_maxTemp, GLOBAL_minTemp))
 
 
