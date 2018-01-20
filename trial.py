@@ -2,7 +2,7 @@ import random
 import time
 import datetime
 
-end_time = 1  # will gather input time, in minutes, from the GUI
+end_time = .25 # will gather input time, in minutes, from the GUI
 start_time = time.time()
 
 
@@ -19,11 +19,11 @@ def getTemperature(temp):  # will be gathering temperature from thermometer
 
     if HeaterON == True:  # temp < target_temp:
         temp += temp_delta_heat
-    print(temp)
+        print(temp)
 
     elif HeaterON == False:  # temp > target_temp:
-    temp -= temp_delta_cool
-    print(temp)
+        temp -= temp_delta_cool
+        print(temp)
 
 
     return temp
@@ -31,19 +31,25 @@ def getTemperature(temp):  # will be gathering temperature from thermometer
 
 def logic(temp, maxTemp, minTemp):  # Determine if heater needs to be turned on/off
     if temp >= maxTemp:
-        print('turn heat off')
-        HeaterON = False
+        print('heat off')
+        return False
     elif temp <= minTemp:
-        print('turn heat on')
-        HeaterON = True
+        print('heat on')
+        return True
     else:
-        print('maintain current heat')
-
+        print('heat on')
+        return True
 
 # Define global variables
 GLOBAL_maxTemp = 68
 GLOBAL_minTemp = 64
-HeaterON = True
 Temp_actual = 55
+HeaterON = logic(Temp_actual, GLOBAL_maxTemp, GLOBAL_minTemp)
 
-getTemperature(55)
+
+while (time.time() - start_time) < (end_time * 60):
+    print(datetime.datetime.now().strftime("%a, %d %B %Y %I:%M:%S"))
+    Temp_actual = getTemperature(Temp_actual)             # float(input('what is the temperature'))
+    HeaterON = logic(Temp_actual, GLOBAL_maxTemp, GLOBAL_minTemp)
+    time.sleep(0.1)
+    print()
