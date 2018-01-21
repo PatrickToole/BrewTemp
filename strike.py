@@ -1,7 +1,9 @@
 import time
 import datetime
+from testmail import notify
+from mash_working import logic
 
-end_time = float(input('How long would you like to mash for(minutes)')) # will gather input time, in minutes, from the GUI
+end_time = float(input('How long would you like to heat for(minutes)?'))
 start_time = time.time()
 
 
@@ -25,28 +27,30 @@ def getTemperature(temp):  # will be gathering temperature from thermometer
     return temp
 
 
-def logic(temp, maxTemp):  # Determine if heater needs to be turned on/off
-    if temp > maxTemp:
+def strikelogic(temp, maxTemp):  # Determine if heater needs to be turned on/off
+    if temp > (maxTemp-1):
         print('heat off')
+        notify()
         return False
     else:
         print('heat on')
         return True
 
 # Define global variables
-GLOBAL_maxTemp = float(input('What is your target mash temperature:'))
+GLOBAL_maxTemp = float(input('What is your target strike temperature:'))
 Temp_actual = float(input('What is the initial water temperature:'))
-HeaterON = logic(Temp_actual, GLOBAL_maxTemp)
+HeaterON = strikelogic(Temp_actual, GLOBAL_maxTemp)
 
-
-write = open('mash1.txt', 'w')
-
-while (time.time() - start_time) < (end_time * 60):
+while Temp_actual < (GLOBAL_maxTemp-1):
     print(datetime.datetime.now().strftime("%a, %d %B %Y %I:%M:%S"))
     Temp_actual = getTemperature(Temp_actual)  # float(input('what is the temperature'))
-    print(round((Temp_actual),2),file=write)
-    HeaterON = logic(Temp_actual, GLOBAL_maxTemp)
+    HeaterON = strikelogic(Temp_actual, GLOBAL_maxTemp)
     time.sleep(.25)
     print()
 
-write.close()
+while Temp_actual >= (GLOBAL_maxTemp-1) and (time.time() - start_time) < (end_time * 60):
+    print(datetime.datetime.now().strftime("%a, %d %B %Y %I:%M:%S"))
+    Temp_actual = getTemperature(Temp_actual)  # float(input('what is the temperature'))
+    HeaterON = logic(Temp_actual, GLOBAL_maxTemp)
+    time.sleep(.25)
+    print()
