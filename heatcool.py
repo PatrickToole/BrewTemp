@@ -21,7 +21,7 @@ while (time.time() - start_time) < (end_time * 60):
         temp -= temp_delta_cool
         print(temp)
 
-    sleep(0)
+    time.sleep(0)
 
 
 
